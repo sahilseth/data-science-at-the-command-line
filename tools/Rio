@@ -49,12 +49,12 @@ finish() {
 trap finish EXIT
 
 callR() {
-	Rscript --vanilla -e "options(scipen=999);df<-read.csv('${IN}',header=${HEADER},sep='${DELIMITER}',stringsAsFactors=F);${REQUIRES}${SCRIPT}last<-.Last.value;if(is.matrix(last)){last<-as.data.frame(last)};if(is.data.frame(last)){write.table(last,'${OUT}',sep=',',quote=T,qmethod='double',row.names=F,col.names=${HEADER});}else if(is.vector(last)){cat(last,sep='\\\n', file='${OUT}')}else if(exists('is.ggplot')&&is.ggplot(last)){ggsave('${OUT}',last,dpi=${RIO_DPI-72},units='cm',width=20,height=15);}else{sink('${OUT}');print(last);}"
+	Rscript --vanilla -e "options(scipen=999);df<-read.csv('${IN}',header=${HEADER},sep='${DELIMITER}',stringsAsFactors=F);${REQUIRES}${SCRIPT}last<-.Last.value;if(is.matrix(last)){last<-as.data.frame(last)};if(is.data.frame(last)){write.table(last,'${OUT}',sep='\t',quote=FALSE,row.names=F,col.names=${HEADER});}else if(is.vector(last)){cat(last,sep='\\\n', file='${OUT}')}else if(exists('is.ggplot')&&is.ggplot(last)){ggsave('${OUT}',last,dpi=${RIO_DPI-72},units='cm',width=20,height=15);}else{sink('${OUT}');print(last);}"
 }
 
 SCRIPT=
 REQUIRES=
-DELIMITER=","
+DELIMITER="\t"
 HEADER="T"
 VERBOSE=false
 
